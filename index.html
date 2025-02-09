@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人格测试</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js"></script>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Noto Serif SC', serif;
+        }
+        .custom-checkbox {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 4px;
+            margin-right: 8px;
+            cursor: pointer;
+            position: relative;
+        }
+        .custom-checkbox:checked {
+            background-color: #ffffff;
+        }
+        .custom-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            color: #1a1a1a;
+            font-size: 14px;
+            left: 4px;
+            top: -1px;
+        }
+        .question-container {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease forwards;
+        }
+        .mobile-button {
+            width: 100%;
+            max-width: 300px;
+            padding: 16px;
+            border-radius: 50px;
+            font-size: 18px;
+            background: linear-gradient(145deg, #1e1e1e, #222);
+            /* box-shadow: 0 4px 15px rgba(0,0,0,0.2); */
+            border: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .mobile-button:active {
+            transform: scale(0.98);
+            /* box-shadow: 0 2px 8px rgba(0,0,0,0.3); */
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        #radar-chart {
+            width: 100%;
+            height: 300px;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: radarAppear 1s ease forwards;
+        }
+        @keyframes radarAppear {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="max-w-2xl mx-auto p-6 min-h-screen flex items-center justify-center">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="text-center">
+            <h1 class="text-3xl font-light mb-8">人格测试</h1>
+            <button onclick="startQuiz()" class="mobile-button">
+                开始测试
+            </button>
+        </div>
+
+        <!-- Quiz Section -->
+        <div id="quiz-section" class="hidden w-full">
+            <form id="quiz-form" class="space-y-12">
+                <!-- Questions will be dynamically inserted here -->
+            </form>
+            
+            <div class="mt-12 text-center">
+                <button onclick="showResults()" class="mobile-button">
+                    查看结果
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-section" class="hidden py-8 w-full">
+            <div id="radar-chart" class="mb-8"></div>
+            
+            <h2 class="text-2xl font-light mb-8">深藏不露的进化型人格——你的多维潜力图谱</h2>
+            <div class="space-y-6 text-gray-200">
+                <!-- Rest of the results content remains the same -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-medium mb-4">核心结论：</h3>
+                    <p class="mb-4">你是一个典型的「矛盾平衡者」，具备以下特质：</p>
+                </div>
+
+                <div class="pl-4">
+                    <div class="mb-6">
+                        <h4 class="text-lg mb-2">外显层：</h4>
+                        <p>在社交中表现出自信与亲和力，但内心保持着独立判断</p>
+                    </div>
+
+                    <div class="mb-6">
+                        <h4 class="text-lg mb-2">决策模式：</h4>
+                        <p>在理性分析与直觉洞察间取得微妙平衡</p>
+                    </div>
+
+                    <div class="mb-6">
+                        <h4 class="text-lg mb-2">潜力维度：</h4>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>隐性领导力（不强势但能自然凝聚他人）</li>
+                            <li>高共情智商（能敏锐感知群体情绪暗流）</li>
+                            <li>创造性解构能力（擅长打破框架重构问题）</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-6">
+                        <h4 class="text-lg mb-2">进化建议：</h4>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>需要更多「战略型独处」激活深层认知</li>
+                            <li>通过跨界学习释放你的多面潜能</li>
+                            <li>建立「能量管理机制」避免内在消耗</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- <div class="mt-12 text-center">
+                <button onclick="restartQuiz()" class="mobile-button">
+                    重新测试
+                </button>
+            </div> -->
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            "你经常发现自己对艺术或自然的美感特别敏感？",
+            "独处时，你会花时间反思自己的目标和价值观？",
+            "朋友遇到困难时，你总是第一个主动提供帮助？",
+            "你偶尔会突然对某个新领域产生强烈兴趣？",
+            "完成任务时，你倾向于先制定计划再行动？",
+            "有人说过你是一个很好的倾听者？",
+            "你相信直觉有时比逻辑更可靠？",
+            "即使压力大，你也会尽量保持冷静的外表？",
+            "你更喜欢有创意的方式解决问题？",
+            "你愿意为了长期目标暂时牺牲短期享受？",
+            "当团队需要领导者时，你会自然地站出来？",
+            "你经常发现自己在观察别人的行为模式？",
+            "你对细节的关注度高于平均水平？",
+            "有人评价过你有一种「神秘的吸引力」？",
+            "你享受帮助他人实现潜力的过程？",
+            "你偶尔会质疑社会常规或传统观念？",
+            "即使疲惫，你也会努力完成对他人的承诺？",
+            "你相信每个人都有未被发现的独特天赋？",
+            "面对挑战时，你更倾向于寻找隐藏的机会？",
+            "你认为人生需要不断突破舒适区？",
+        ];
+
+        function startQuiz() {
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('quiz-section').classList.remove('hidden');
+            createQuestions();
+        }
+
+        function createQuestions() {
+            const form = document.getElementById('quiz-form');
+            questions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.style.animationDelay = `${index * 0.1}s`;
+                questionDiv.innerHTML = `
+                    <div class="mb-8">
+                        <p class="text-xl font-light mb-4">${index + 1}. ${question}</p>
+                        <div class="flex space-x-8 ml-6">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="q${index}" value="yes" class="custom-checkbox">
+                                <span>是</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="q${index}" value="no" class="custom-checkbox">
+                                <span>否</span>
+                            </label>
+                        </div>
+                    </div>
+                `;
+                form.appendChild(questionDiv);
+            });
+        }
+
+        function showResults() {
+            document.getElementById('quiz-section').classList.add('hidden');
+            document.getElementById('results-section').classList.remove('hidden');
+            window.scrollTo(0, 0);
+            
+            // Initialize radar chart
+            const chartDom = document.getElementById('radar-chart');
+            const myChart = echarts.init(chartDom);
+            
+            const option = {
+                radar: {
+                    indicator: [
+                        { name: '创新', max: 100 },
+                        { name: '领导', max: 100 },
+                        { name: '洞察', max: 100 },
+                        { name: '共情', max: 100 },
+                        { name: '理性', max: 100 },
+                        { name: '直觉', max: 100 }
+                    ],
+                    splitArea: {
+                        show: true,
+                        areaStyle: {
+                            color: ['rgba(255,255,255,0.05)', 'rgba(255,255,255,0.1)']
+                        }
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: 'rgba(255,255,255,0.2)'
+                        }
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: 'rgba(255,255,255,0.2)'
+                        }
+                    }
+                },
+                series: [{
+                    type: 'radar',
+                    data: [{
+                        value: [85, 75, 90, 85, 70, 88],
+                        name: '个人特质',
+                        areaStyle: {
+                            color: 'rgba(65,105,225,0.5)'
+                        },
+                        lineStyle: {
+                            color: 'rgba(65,105,225,0.8)'
+                        }
+                    }]
+                }]
+            };
+            
+            myChart.setOption(option);
+        }
+
+        function restartQuiz() {
+            document.getElementById('results-section').classList.add('hidden');
+            document.getElementById('quiz-form').innerHTML = '';
+            document.getElementById('welcome-screen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
