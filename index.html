@@ -46,14 +46,12 @@
             border-radius: 50px;
             font-size: 18px;
             background: linear-gradient(145deg, #1e1e1e, #222);
-            /* box-shadow: 0 4px 15px rgba(0,0,0,0.2); */
             border: none;
             color: white;
             transition: all 0.3s ease;
         }
         .mobile-button:active {
             transform: scale(0.98);
-            /* box-shadow: 0 2px 8px rgba(0,0,0,0.3); */
         }
         @keyframes fadeIn {
             to {
@@ -72,6 +70,48 @@
             to {
                 opacity: 1;
                 transform: scale(1);
+            }
+        }
+        
+        .loading-wave {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .loading-bar {
+            width: 4px;
+            height: 24px;
+            background: #ffffff;
+            border-radius: 2px;
+            animation: wave 1s ease-in-out infinite;
+        }
+        
+        .loading-bar:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+        
+        .loading-bar:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+        
+        .loading-bar:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+        
+        .loading-bar:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes wave {
+            0%, 100% {
+                transform: scaleY(0.5);
+                opacity: 0.2;
+            }
+            50% {
+                transform: scaleY(1);
+                opacity: 1;
             }
         }
     </style>
@@ -99,54 +139,106 @@
             </div>
         </div>
 
+        <!-- Loading Section -->
+        <div id="loading-section" class="hidden w-full text-center">
+            <div class="inline-block">
+                <div class="loading-wave mb-8">
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                </div>
+                <p class="text-gray-300 text-lg font-light tracking-wider">正在分析你的答案...</p>
+            </div>
+        </div>
+
         <!-- Results Section -->
         <div id="results-section" class="hidden py-8 w-full">
             <div id="radar-chart" class="mb-8"></div>
             
             <h2 class="text-2xl font-light mb-8">深藏不露的进化型人格——你的多维潜力图谱</h2>
             <div class="space-y-6 text-gray-200">
-                <!-- Rest of the results content remains the same -->
-                <div class="mb-8">
-                    <h3 class="text-xl font-medium mb-4">核心结论：</h3>
-                    <p class="mb-4">你是一个典型的「矛盾平衡者」，具备以下特质：</p>
-                </div>
-
                 <div class="pl-4">
-                    <div class="mb-6">
-                        <h4 class="text-lg mb-2">外显层：</h4>
-                        <p>在社交中表现出自信与亲和力，但内心保持着独立判断</p>
+                    <!-- 新增人格画像模块 -->
+                    <div class="mb-6 bg-black/20 p-4 rounded-lg">
+                        <h4 class="text-lg mb-2">🌌 人格画像：</h4>
+                        <p>你的精神世界如同分形几何般复杂有序，表面呈现社交适应性，内在保持着独特的认知节拍。对他人的情绪波动有着雷达般的感知力，却常常对自己的潜能存在认知盲区。</p>
                     </div>
 
                     <div class="mb-6">
-                        <h4 class="text-lg mb-2">决策模式：</h4>
-                        <p>在理性分析与直觉洞察间取得微妙平衡</p>
-                    </div>
-
-                    <div class="mb-6">
-                        <h4 class="text-lg mb-2">潜力维度：</h4>
+                        <h4 class="text-lg mb-2">🎭 外显特质：</h4>
                         <ul class="list-disc pl-6 space-y-2">
-                            <li>隐性领导力（不强势但能自然凝聚他人）</li>
-                            <li>高共情智商（能敏锐感知群体情绪暗流）</li>
-                            <li>创造性解构能力（擅长打破框架重构问题）</li>
+                            <li>在群体中常被评价为"令人安心的存在"，但独处时会产生哲思性自省</li>
+                            <li>对艺术/象征性表达有特殊共鸣，厌恶非黑即白的极端判断</li>
                         </ul>
                     </div>
 
                     <div class="mb-6">
-                        <h4 class="text-lg mb-2">进化建议：</h4>
-                        <ul class="list-disc pl-6 space-y-2">
-                            <li>需要更多「战略型独处」激活深层认知</li>
-                            <li>通过跨界学习释放你的多面潜能</li>
-                            <li>建立「能量管理机制」避免内在消耗</li>
-                        </ul>
+                        <h4 class="text-lg mb-2">⚖️ 决策模式：</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-black/20 p-4 rounded-lg">
+                                <h5 class="font-medium mb-2">优势决策区</h5>
+                                <p>在涉及人际关系或创意领域时，能启动「超维度思考」，将感性直觉转化为可行方案</p>
+                            </div>
+                            <div class="bg-black/20 p-4 rounded-lg">
+                                <h5 class="font-medium mb-2">潜在盲点</h5>
+                                <p>面对高度结构化的问题时，可能陷入「过度分析漩涡」，需外界锚点帮助聚焦</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <h4 class="text-lg mb-2">🚀 潜力维度：</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-gradient-to-br from-purple-500/20 to-blue-500/20 p-4 rounded-lg">
+                                <h5 class="font-medium mb-2">隐性领导力</h5>
+                                <p class="text-sm">通过「共鸣辐射」而非权威施压影响他人，适合作为团队精神纽带</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-green-500/20 to-yellow-500/20 p-4 rounded-lg">
+                                <h5 class="font-medium mb-2">认知弹性</h5>
+                                <p class="text-sm">能同时容纳对立观点，在矛盾中催生创新解决方案</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-pink-500/20 to-red-500/20 p-4 rounded-lg">
+                                <h5 class="font-medium mb-2">时空感知力</h5>
+                                <p class="text-sm">对趋势变化具有超前直觉，但需要建立信心将其显性化</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 新增关系模式模块 -->
+                    <div class="mb-6">
+                        <h4 class="text-lg mb-2">🤝 关系模式：</h4>
+                        <p>在亲密关系中呈现"刺猬效应"——渴望深度连接又需要精神保留地，这种动态平衡可能被误解为疏离，实则是维持心理能量的必要机制。</p>
+                    </div>
+
+                    <div class="mb-6">
+                        <h4 class="text-lg mb-2">🔮 进化建议：</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-black/20 p-4 rounded-lg">
+                                <h5 class="font-medium mb-2">认知升级</h5>
+                                <ul class="list-[square] pl-4 space-y-2 text-sm">
+                                    <li>实施「知识对冲策略」：同时修习理性学科（如经济学）与感性领域（如诗歌）</li>
+                                    <li>建立「思维存档系统」：用影像/声音记录灵感迸发的瞬间</li>
+                                </ul>
+                            </div>
+                            <div class="bg-black/20 p-4 rounded-lg">
+                                <h5 class="font-medium mb-2">能量管理</h5>
+                                <ul class="list-[square] pl-4 space-y-2 text-sm">
+                                    <li>设置「社交假面脱落时间」：每周2小时完全独处的仪式空间</li>
+                                    <li>创建「情绪转换开关」：特定音乐/气味作为心理状态过渡媒介</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 新增未来预言模块 -->
+                    <div class="mt-8 p-4 bg-gradient-to-r from-purple-500/30 to-blue-500/30 rounded-lg">
+                        <h4 class="text-lg font-medium mb-2">🌅 五年后可能进化的形态：</h4>
+                        <p>如果持续进行认知扩容，可能发展为「跨界整合者」——能自如穿梭在不同领域，将看似无关的事物转化为创新解决方案。关键转折点可能出现在接触某个跨维度的知识体系（如复杂科学、比较神话学）之后。</p>
                     </div>
                 </div>
             </div>
-            
-            <!-- <div class="mt-12 text-center">
-                <button onclick="restartQuiz()" class="mobile-button">
-                    重新测试
-                </button>
-            </div> -->
         </div>
     </div>
 
@@ -206,57 +298,67 @@
         }
 
         function showResults() {
+            // Hide quiz section
             document.getElementById('quiz-section').classList.add('hidden');
-            document.getElementById('results-section').classList.remove('hidden');
-            window.scrollTo(0, 0);
+            // Show loading section
+            document.getElementById('loading-section').classList.remove('hidden');
             
-            // Initialize radar chart
-            const chartDom = document.getElementById('radar-chart');
-            const myChart = echarts.init(chartDom);
-            
-            const option = {
-                radar: {
-                    indicator: [
-                        { name: '创新', max: 100 },
-                        { name: '领导', max: 100 },
-                        { name: '洞察', max: 100 },
-                        { name: '共情', max: 100 },
-                        { name: '理性', max: 100 },
-                        { name: '直觉', max: 100 }
-                    ],
-                    splitArea: {
-                        show: true,
-                        areaStyle: {
-                            color: ['rgba(255,255,255,0.05)', 'rgba(255,255,255,0.1)']
-                        }
-                    },
-                    axisLine: {
-                        lineStyle: {
-                            color: 'rgba(255,255,255,0.2)'
-                        }
-                    },
-                    splitLine: {
-                        lineStyle: {
-                            color: 'rgba(255,255,255,0.2)'
-                        }
-                    }
-                },
-                series: [{
-                    type: 'radar',
-                    data: [{
-                        value: [85, 75, 90, 85, 70, 88],
-                        name: '个人特质',
-                        areaStyle: {
-                            color: 'rgba(65,105,225,0.5)'
+            // After 2 seconds, show results
+            setTimeout(() => {
+                // Hide loading section
+                document.getElementById('loading-section').classList.add('hidden');
+                // Show results section
+                document.getElementById('results-section').classList.remove('hidden');
+                window.scrollTo(0, 0);
+                
+                // Initialize radar chart
+                const chartDom = document.getElementById('radar-chart');
+                const myChart = echarts.init(chartDom);
+                
+                const option = {
+                    radar: {
+                        indicator: [
+                            { name: '创新', max: 100 },
+                            { name: '领导', max: 100 },
+                            { name: '洞察', max: 100 },
+                            { name: '共情', max: 100 },
+                            { name: '理性', max: 100 },
+                            { name: '直觉', max: 100 }
+                        ],
+                        splitArea: {
+                            show: true,
+                            areaStyle: {
+                                color: ['rgba(255,255,255,0.05)', 'rgba(255,255,255,0.1)']
+                            }
                         },
-                        lineStyle: {
-                            color: 'rgba(65,105,225,0.8)'
+                        axisLine: {
+                            lineStyle: {
+                                color: 'rgba(255,255,255,0.2)'
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: 'rgba(255,255,255,0.2)'
+                            }
                         }
+                    },
+                    series: [{
+                        type: 'radar',
+                        data: [{
+                            value: [85, 75, 90, 85, 70, 88],
+                            name: '个人特质',
+                            areaStyle: {
+                                color: 'rgba(65,105,225,0.5)'
+                            },
+                            lineStyle: {
+                                color: 'rgba(65,105,225,0.8)'
+                            }
+                        }]
                     }]
-                }]
-            };
-            
-            myChart.setOption(option);
+                };
+                
+                myChart.setOption(option);
+            }, 2000);
         }
 
         function restartQuiz() {
